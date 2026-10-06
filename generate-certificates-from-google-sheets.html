@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to generate certificates from Google Sheets (free template method)</title>
+<meta name="description" content="Turn a Google Sheets list of names into one certificate per person: build a landscape Google Docs template with placeholders, copy it, fill it, and save PDFs. Step by step, with Google's own help pages cited.">
+<link rel="canonical" href="https://nxrivard-sudo.github.io/rowstamp/generate-certificates-from-google-sheets.html">
+<meta property="og:type" content="article"><meta property="og:title" content="How to generate certificates from Google Sheets"><meta property="og:description" content="One certificate per spreadsheet row with a Google Docs template: the free manual method, the developer method, and how to automate it."><meta property="og:url" content="https://nxrivard-sudo.github.io/rowstamp/generate-certificates-from-google-sheets.html"><meta property="og:image" content="https://nxrivard-sudo.github.io/rowstamp/icon.png">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<p class="note"><a href="./">RowStamp</a> &rsaquo; Guides</p>
+<h1>How to generate certificates from Google Sheets</h1>
+<p class="sub">You have a sheet of attendees or students and need one certificate each. Here is the free way to do it with a Google Docs template, and how to automate it.</p>
+
+<h2>What you need</h2>
+<ul><li>A Google Sheets spreadsheet with one row per person and a header row, for example <b>Name</b>, <b>Course</b>, <b>Date</b>, <b>Instructor</b>, <b>Certificate ID</b>.</li>
+<li>A Google Doc that will be your certificate template.</li></ul>
+<table class="grid"><tr><th>Name</th><th>Course</th><th>Date</th><th>Certificate ID</th></tr>
+<tr><td>Avery Example</td><td>Food Safety Basics</td><td>October 6, 2026</td><td>CERT-0001</td></tr>
+<tr><td>Jordan Sample</td><td>Food Safety Basics</td><td>October 6, 2026</td><td>CERT-0002</td></tr></table>
+<p class="note">Tip: format the Date column the way you want it printed. In Google Sheets, select the cells and click Format &rarr; Number, then pick a date format (<a href="https://support.google.com/docs/answer/56470" rel="noopener">Google: Format numbers in a spreadsheet</a>).</p>
+
+<h2>Method 1: by hand with a Google Docs template (free)</h2>
+<ol class="steps">
+<li><b>Make the page landscape.</b> In your template Doc, click File &rarr; Page setup, select <b>Pages</b>, set Orientation to Landscape and click OK. Page orientation isn't available in pageless documents, so the Doc has to be in pages format (<a href="https://support.google.com/docs/answer/10296604" rel="noopener">Google: Change page settings on Google Docs</a>).</li>
+<li><b>Write the certificate with placeholders.</b> Type the fixed wording and put a tag wherever a person's details go, such as <span class="tag">{{Name}}</span>, <span class="tag">{{Course}}</span> and <span class="tag">{{Date}}</span>. Style the tags the way the final text should look (font, size, color). Google's developer guide recommends tags that are &ldquo;unlikely to occur normally&rdquo;, and double braces are a common choice (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">Google for Developers: Merge text into a document</a>).</li>
+<li><b>Copy the template for one person.</b> Click File &rarr; Make a copy, type a name such as &ldquo;Certificate - Avery Example&rdquo;, choose a folder and click OK (<a href="https://support.google.com/docs/answer/49114" rel="noopener">Google: Create, view, or download a file</a>).</li>
+<li><b>Fill in the copy.</b> In the copy, click Edit &rarr; Find and replace. Put <span class="tag">{{Name}}</span> next to &ldquo;Find&rdquo;, paste the person's name from the sheet next to &ldquo;Replace with&rdquo;, tick Match case and click <b>Replace all</b>. Repeat for each tag (<a href="https://support.google.com/docs/answer/62754" rel="noopener">Google: Search and use find and replace</a>).</li>
+<li><b>Save a PDF.</b> Click File &rarr; Download and choose PDF. For a large Doc in Chrome, Google suggests File &rarr; Print with Destination set to &ldquo;Save as PDF&rdquo; (<a href="https://support.google.com/docs/answer/49114" rel="noopener">same Google page</a>).</li>
+<li><b>Keep track.</b> Paste the new Doc's link into a &ldquo;Certificate link&rdquo; column in your sheet so you know who is done.</li>
+</ol>
+<p>This works well for a handful of people. The work grows with the list: 40 people with 4 tags each is 40 copies and 160 Replace all actions, plus 40 downloads, and every one is a chance to paste the wrong name.</p>
+
+<h3>Variable chips (work and school accounts)</h3>
+<p>On eligible work or school accounts, Google Docs has variable chips: go to Insert &rarr; Smart chips &rarr; Variables, and when you change a variable's value it updates everywhere it's used in that Doc (<a href="https://support.google.com/docs/answer/13584275" rel="noopener">Google: Insert and use variable chips</a>). That replaces the Find and replace step, but you still make one copy per person and type each value yourself. Google's help page says variable chips are only available for eligible work or school accounts.</p>
+
+<h2>Method 2: a script (for developers)</h2>
+<p>Google documents the same template idea for code: copy the template with the Drive API's <code>files.copy</code>, then replace the tags with the Docs API's <code>ReplaceAllTextRequest</code> (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">Merge text into a document</a>). Looping that over your sheet's rows gives you one certificate per row, but you write, authorize and maintain the script yourself.</p>
+
+<h2>Method 3: let RowStamp do the copying</h2>
+<p><a href="./">RowStamp</a> is a spreadsheet add-on that automates Method 1. It creates a ready-made landscape certificate template as a Google Doc you can edit, matches tags like <span class="tag">{{Name}}</span> to your column headers automatically, and then makes one Doc per row (all rows, a range like 2-20, or the rows you selected). It writes a &ldquo;RowStamp doc&rdquo; link and, if you want, a &ldquo;RowStamp PDF&rdquo; download link in new columns next to your data. Your existing cells are never changed, and rows that already have a certificate are skipped the next time you run it.</p>
+<p>It asks for only two permissions: the spreadsheet you open it in, and the Google Drive files it creates or that you choose. The free plan includes every feature, up to 10 documents per day; <a href="pro.html">Pro</a> removes the daily limit.</p>
+<p><b>Availability:</b> RowStamp will be available as a Google Sheets add-on after Google Workspace Marketplace review. Once installed, open it from the add-ons side panel in Google Sheets.</p>
+
+<h2>Tips for better certificates</h2>
+<ul><li>Give every row a unique Certificate ID (CERT-0001, CERT-0002&hellip;) so a certificate can be checked against your sheet later.</li>
+<li>Check name spelling and capitalization in the sheet first. Fixing one cell is easier than fixing a finished certificate.</li>
+<li>Keep the tag text exactly the same as the column header, including spaces, so it's obvious which column fills which tag.</li></ul>
+
+<h2>Related guides</h2>
+<ul><li><a href="create-invoices-from-google-sheets.html">How to create invoices from Google Sheets rows</a></li>
+<li><a href="mail-merge-google-sheets-to-google-docs.html">Mail merge from Google Sheets to Google Docs, without sending email</a></li></ul>
+<p class="note">Steps are from Google's help center and developer documentation, accessed October 6, 2026. Menus can change; follow the linked Google pages if yours look different.</p>
+<footer><a href="./">Home</a> &middot; <a href="support.html">Support</a> &middot; <a href="pro.html">Pro</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a><br>
+Google Sheets, Google Docs, Google Drive and Google Workspace are trademarks of Google LLC. RowStamp is not affiliated with or endorsed by Google.</footer>
+</body></html>
