@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RowStamp: Support and FAQ</title><link rel="canonical" href="https://nxrivard-sudo.github.io/rowstamp/support.html"><link rel="stylesheet" href="style.css"></head><body>
+<h1>Support</h1><p class="sub">Email <a href="mailto:nxrivard@gmail.com">nxrivard@gmail.com</a>. We usually reply within 1 business day.</p>
+<h2>Getting started</h2>
+<ol class="steps"><li>Put one record per row on a tab, with column names in row 1 (for example <i>Name, Course, Date</i>).</li>
+<li>Open RowStamp from the add-ons side panel in Google Sheets.</li>
+<li>Click <b>New certificate</b> or <b>New invoice</b>. RowStamp creates an editable template in a "RowStamp" folder in your Drive. Click <b>Open template</b> to change the wording, add your logo, or move fields.</li>
+<li>Click <b>Check fields</b> to confirm which column fills each placeholder.</li>
+<li>Enter the rows (or select them and click <b>Use selected rows</b>), then click <b>Fill documents</b>.</li></ol>
+<p>Want to try it first? Under <b>Try it with sample data</b>, RowStamp adds a tab with three made-up rows that match the built-in template.</p>
+<h2>Using your own Google Doc as a template</h2>
+<ol class="steps"><li>Open the Doc in Google Docs and type column names in double braces where values should go, like <span class="tag">{{Name}}</span> or <span class="tag">{{Invoice Number}}</span>.</li>
+<li>Open RowStamp from the Docs side panel and click <b>Allow access to this document</b>. This gives RowStamp access to that one file only.</li>
+<li>Click <b>Use as template</b>. It now appears in the template list in Google Sheets.</li></ol>
+<h2>FAQ</h2>
+<p><b>Does it change my data?</b> No. It adds "RowStamp doc" (and optionally "RowStamp PDF") columns to the right of your data. The template is copied, never edited.</p>
+<p><b>How are placeholders matched to columns?</b> By name, ignoring capitals, spaces, dashes and underscores: <span class="tag">{{Client Name}}</span> matches a "client_name" column. If a placeholder has no clear match, RowStamp asks you to pick a column or leave it blank.</p>
+<p><b>Do placeholders keep my formatting?</b> Yes. The filled value takes the placeholder's font and style. Values are filled as they appear in the sheet, so dates and currency look the same as in your cells.</p>
+<p><b>How do I get a PDF?</b> Tick <b>Add a PDF download link column</b>. Clicking a link downloads that document as a PDF directly from Google.</p>
+<p><b>Why did it stop partway?</b> Google limits each add-on click to about 30 seconds, usually enough for about 10 documents, depending on the template. Click <b>Fill documents</b> again; rows that already have a document are skipped. On the free plan, the limit is 10 documents per day.</p>
+<p><b>Can it see my other files?</b> No. RowStamp can only open files it created or that you chose with <b>Allow access to this document</b>. See <a href="privacy.html">Privacy</a>.</p>
+<p><b>Does it send emails?</b> No. RowStamp only creates documents and links.</p>
+<p><b>Refunds?</b> Full refund within 14 days, no questions asked.</p>
+<footer><a href="index.html">Home</a> &middot; <a href="pro.html">Pro</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></footer></body></html>
