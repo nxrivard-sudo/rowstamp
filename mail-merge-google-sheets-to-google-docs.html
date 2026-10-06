@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mail merge from Google Sheets to Google Docs, without sending email</title>
+<meta name="description" content="Gmail's mail merge sends emails. If you need one Google Doc per spreadsheet row instead (letters, certificates, invoices), here is how to merge Sheets into a Docs template by hand, with code, or with an add-on.">
+<link rel="canonical" href="https://nxrivard-sudo.github.io/rowstamp/mail-merge-google-sheets-to-google-docs.html">
+<meta property="og:type" content="article"><meta property="og:title" content="Mail merge from Google Sheets to Google Docs, without email"><meta property="og:description" content="Make one Google Doc per spreadsheet row instead of sending emails: template, placeholders, copy and fill."><meta property="og:url" content="https://nxrivard-sudo.github.io/rowstamp/mail-merge-google-sheets-to-google-docs.html"><meta property="og:image" content="https://nxrivard-sudo.github.io/rowstamp/icon.png">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<p class="note"><a href="./">RowStamp</a> &rsaquo; Guides</p>
+<h1>Mail merge from Google Sheets to Google Docs, without sending email</h1>
+<p class="sub">&ldquo;Mail merge&rdquo; in Google usually means Gmail. If what you need is a document per row (a letter, a confirmation, a certificate) rather than an email, this is how to do it.</p>
+
+<h2>Gmail mail merge vs a document per row</h2>
+<table><tr><th></th><th>Gmail mail merge</th><th>Docs merge (one Doc per row)</th></tr>
+<tr><td>Result</td><td>A personalized email to each recipient</td><td>A separate Google Doc (and PDF) for each row</td></tr>
+<tr><td>Data</td><td>Recipients in the first tab of a spreadsheet; column headers become merge tags like @firstname</td><td>Any tab; column headers fill tags like <span class="tag">{{Name}}</span></td></tr>
+<tr><td>Who can use it</td><td>Eligible Google Workspace plans (listed below)</td><td>Anyone with Google Docs (by hand); add-ons and scripts vary</td></tr>
+<tr><td>Limits</td><td>Up to 1,500 mail merge recipients per day</td><td>Your time, or the tool's limits</td></tr></table>
+<p>According to Google's Gmail help, mail merge sends each recipient a unique copy of an email with the merge tags filled in, contact data must be in the first tab of the spreadsheet, and you can send to a maximum of 1,500 recipients per day. It needs one of these plans: Workspace Individual, Business Standard, Business Plus, Enterprise Standard, Enterprise Plus, Education Standard or Education Plus (<a href="https://support.google.com/mail/answer/12921167" rel="noopener">Google: Send personalized emails with mail merge</a>). It does not produce documents. If you want files to print, sign, archive or attach, use one of the methods below.</p>
+
+<h2>Method 1: merge by hand with a Docs template (free)</h2>
+<ol class="steps">
+<li><b>Prepare the sheet.</b> One row per document, with a header row: Name, Address, Start Date, and so on. Format dates and money in the sheet the way you want them printed, with Format &rarr; Number (<a href="https://support.google.com/docs/answer/56470" rel="noopener">Google: Format numbers in a spreadsheet</a>).</li>
+<li><b>Write the template.</b> In Google Docs, write the letter once and put a tag where each value goes: &ldquo;Dear <span class="tag">{{Name}}</span>, your start date is <span class="tag">{{Start Date}}</span>.&rdquo; Google's developer guide calls this a template with fixed text and placeholders, and suggests tags &ldquo;unlikely to occur normally&rdquo; (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">Google for Developers: Merge text into a document</a>).</li>
+<li><b>Copy it per row.</b> File &rarr; Make a copy, give it a name that includes the row's key value, choose a folder and click OK (<a href="https://support.google.com/docs/answer/49114" rel="noopener">Google: Create, view, or download a file</a>).</li>
+<li><b>Fill the copy.</b> Edit &rarr; Find and replace: find each tag, replace it with that row's value, tick Match case and click <b>Replace all</b> (<a href="https://support.google.com/docs/answer/62754" rel="noopener">Google: Search and use find and replace</a>).</li>
+<li><b>Export if needed.</b> File &rarr; Download &rarr; PDF (<a href="https://support.google.com/docs/answer/49114" rel="noopener">same Google page</a>).</li></ol>
+<p>Fine for five letters, tedious for fifty: every row means a copy, one replacement per tag, and a download.</p>
+<p class="note">On eligible work or school accounts, Docs variable chips (Insert &rarr; Smart chips &rarr; Variables) update a value everywhere it appears in a Doc once you set it (<a href="https://support.google.com/docs/answer/13584275" rel="noopener">Google: Insert and use variable chips</a>). They save the find-and-replace step, but the values still don't come from your sheet automatically.</p>
+
+<h2>Method 2: a script</h2>
+<p>For developers, Google documents the merge as two API calls per document: copy the template with the Drive API's <code>files.copy</code>, then fill the tags with a <code>ReplaceAllTextRequest</code> in the Docs API's <code>batchUpdate</code> (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">Merge text into a document</a>). Google also publishes an Apps Script sample that fills a Gmail draft template with Sheets data and sends the emails from your Gmail account; that is the email version, not the document version (<a href="https://developers.google.com/apps-script/samples/automations/mail-merge" rel="noopener">Create a mail merge with Gmail &amp; Google Sheets</a>).</p>
+
+<h2>Method 3: RowStamp (no email, no code)</h2>
+<p><a href="./">RowStamp</a> is a spreadsheet add-on built for exactly this: a Docs merge with no email step. Use one of your own Docs as the template (open it and choose it from the RowStamp panel in Docs) or start from the built-in certificate or invoice template. Tags like <span class="tag">{{Name}}</span> are matched to your column headers automatically, and you can change any match under <b>Check fields</b>. Pick all rows, a range like 2-20, or the rows you selected, and click <b>Fill documents</b>. Each row becomes its own Doc, with a &ldquo;RowStamp doc&rdquo; link and an optional &ldquo;RowStamp PDF&rdquo; download link added next to your data. RowStamp doesn't send emails.</p>
+<p>It asks for only two permissions: the spreadsheet you open it in, and the Google Drive files it creates or that you choose. Free for 10 documents a day; <a href="pro.html">Pro</a> removes the daily limit.</p>
+<p><b>Availability:</b> RowStamp will be available as a Google Sheets add-on after Google Workspace Marketplace review. Once installed, open it from the add-ons side panel in Google Sheets.</p>
+
+<h2>Common uses for a Docs merge</h2>
+<ul><li>Offer letters, welcome letters and confirmations</li>
+<li><a href="generate-certificates-from-google-sheets.html">Certificates</a> for courses, training and awards</li>
+<li><a href="create-invoices-from-google-sheets.html">Invoices</a> and receipts, one per order</li></ul>
+
+<h2>Related guides</h2>
+<ul><li><a href="generate-certificates-from-google-sheets.html">How to generate certificates from Google Sheets</a></li>
+<li><a href="create-invoices-from-google-sheets.html">How to create invoices from Google Sheets rows</a></li></ul>
+<p class="note">Facts about Gmail and Google Docs are from Google's help center and developer documentation, accessed October 6, 2026. Plans and limits can change; check the linked Google pages.</p>
+<footer><a href="./">Home</a> &middot; <a href="support.html">Support</a> &middot; <a href="pro.html">Pro</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a><br>
+Google Sheets, Google Docs, Google Drive and Google Workspace are trademarks of Google LLC. RowStamp is not affiliated with or endorsed by Google.</footer>
+</body></html>
