@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to create invoices from Google Sheets rows (template method)</title>
+<meta name="description" content="Keep one invoice per row in Google Sheets and turn each row into a Google Docs invoice and PDF. Sheet layout, Docs template with placeholders, the manual copy-and-replace steps, and how to automate them.">
+<link rel="canonical" href="https://nxrivard-sudo.github.io/rowstamp/create-invoices-from-google-sheets.html">
+<meta property="og:type" content="article"><meta property="og:title" content="How to create invoices from Google Sheets rows"><meta property="og:description" content="One row, one invoice: set up the sheet, build a Google Docs invoice template, fill it and save a PDF."><meta property="og:url" content="https://nxrivard-sudo.github.io/rowstamp/create-invoices-from-google-sheets.html"><meta property="og:image" content="https://nxrivard-sudo.github.io/rowstamp/icon.png">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<p class="note"><a href="./">RowStamp</a> &rsaquo; Guides</p>
+<h1>How to create invoices from Google Sheets rows</h1>
+<p class="sub">Your orders or jobs already live in a spreadsheet. Here is how to turn each row into its own invoice as a Google Doc and PDF, by hand for free, and how to automate it.</p>
+
+<h2>Step 1: set up the sheet (one row = one invoice)</h2>
+<p>Use a header row and one row per invoice. A layout that works:</p>
+<table class="grid"><tr><th>Invoice Number</th><th>Date</th><th>Due Date</th><th>Client Name</th><th>Description</th><th>Quantity</th><th>Rate</th><th>Amount</th></tr>
+<tr><td>1001</td><td>Oct 6, 2026</td><td>Nov 5, 2026</td><td>Example Catering Co.</td><td>Event staffing</td><td>10</td><td>$50.00</td><td>$500.00</td></tr></table>
+<ul><li>Let the sheet do the math: in the Amount column use a formula such as <code>=F2*G2</code> (Quantity times Rate) and fill it down.</li>
+<li>Format money and dates the way they should be printed: select the cells, click Format &rarr; Number and choose a currency or date format (<a href="https://support.google.com/docs/answer/56470" rel="noopener">Google: Format numbers in a spreadsheet</a>). When you copy a value into a document, use what the cell shows.</li>
+<li>Add a <b>Status</b> or <b>Invoice link</b> column so you can see which rows already have an invoice.</li></ul>
+
+<h2>Step 2: build the invoice template in Google Docs</h2>
+<p>Create a Doc with your business name, contact details and payment terms. Wherever a value from the sheet goes, type a tag in double braces that matches the column header: <span class="tag">{{Invoice Number}}</span>, <span class="tag">{{Date}}</span>, <span class="tag">{{Client Name}}</span>, <span class="tag">{{Amount}}</span> and so on. A small table for the line works well:</p>
+<table class="grid"><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>
+<tr><td>{{Description}}</td><td>{{Quantity}}</td><td>{{Rate}}</td><td>{{Amount}}</td></tr></table>
+<p>Google's developer guide describes this exact pattern (a template with fixed text plus tags, copied and then filled), and suggests tags that are &ldquo;unlikely to occur normally&rdquo; so nothing else gets replaced by mistake (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">Google for Developers: Merge text into a document</a>).</p>
+
+<h2>Step 3: make each invoice by hand (free)</h2>
+<ol class="steps">
+<li>Open the template and click File &rarr; Make a copy. Name it, for example &ldquo;Invoice 1001 - Example Catering Co.&rdquo;, choose a folder and click OK (<a href="https://support.google.com/docs/answer/49114" rel="noopener">Google: Create, view, or download a file</a>).</li>
+<li>In the copy, click Edit &rarr; Find and replace. Find <span class="tag">{{Client Name}}</span>, replace it with the client's name from the row, tick Match case and click <b>Replace all</b>. Repeat for each tag (<a href="https://support.google.com/docs/answer/62754" rel="noopener">Google: Search and use find and replace</a>).</li>
+<li>Click File &rarr; Download and choose PDF to get a file you can send (<a href="https://support.google.com/docs/answer/49114" rel="noopener">same Google page</a>).</li>
+<li>Paste the invoice link into the row and mark it done.</li></ol>
+<p>That's fine for a few invoices a month. With 30 invoices and 8 tags it's 30 copies and 240 replacements, and a mistyped amount on an invoice is worse than on most documents.</p>
+<p class="note">On eligible work or school accounts, Google Docs variable chips (Insert &rarr; Smart chips &rarr; Variables) let you set a value once and have it update everywhere it's used in the Doc (<a href="https://support.google.com/docs/answer/13584275" rel="noopener">Google: Insert and use variable chips</a>). You still copy the template and type each value per invoice.</p>
+
+<h2>Invoices with several line items</h2>
+<p>Placeholder filling works one value per tag. Google's developer guide points out that a list of items whose length isn't known in advance (such as invoice lines) can't be done with plain text replacement and needs extra table logic in code (<a href="https://developers.google.com/workspace/docs/api/how-tos/merge" rel="noopener">same guide, &ldquo;Handle dynamic lists and tables&rdquo;</a>). Without code, the simple options are:</p>
+<ul><li>Fixed line columns: Item 1, Amount 1, Item 2, Amount 2&hellip; with matching tags in the template, left empty when unused.</li>
+<li>One summary line per invoice, such as &ldquo;Event staffing, Oct 1-5 (see attached timesheet)&rdquo;.</li></ul>
+
+<h2>Automate it with RowStamp</h2>
+<p><a href="./">RowStamp</a> is a spreadsheet add-on that does Step 3 for you. It includes a built-in invoice template that it creates as a Google Doc you can edit and brand, matches tags to your column headers automatically (capitals, spaces, dashes and underscores don't matter), and makes one invoice Doc per row for all rows, a range like 2-20, or the rows you selected. It writes a &ldquo;RowStamp doc&rdquo; link and an optional &ldquo;RowStamp PDF&rdquo; download link in new columns next to your data, never changes your existing cells, and skips rows that already have an invoice, so you can add new orders and run it again.</p>
+<p>RowStamp doesn't send emails; you send or share the PDF yourself. It asks for only two permissions: the spreadsheet you open it in, and the Google Drive files it creates or that you choose. Free for 10 documents a day; <a href="pro.html">Pro</a> removes the daily limit.</p>
+<p><b>Availability:</b> RowStamp will be available as a Google Sheets add-on after Google Workspace Marketplace review. Once installed, open it from the add-ons side panel in Google Sheets.</p>
+
+<h2>Before you send an invoice</h2>
+<ul><li>Use a unique, increasing invoice number in every row and never reuse one.</li>
+<li>Check what your country or state requires on an invoice (tax IDs, tax lines, addresses). This guide covers the mechanics, not tax or legal advice.</li></ul>
+
+<h2>Related guides</h2>
+<ul><li><a href="generate-certificates-from-google-sheets.html">How to generate certificates from Google Sheets</a></li>
+<li><a href="mail-merge-google-sheets-to-google-docs.html">Mail merge from Google Sheets to Google Docs, without sending email</a></li></ul>
+<p class="note">Steps are from Google's help center and developer documentation, accessed October 6, 2026. Menus can change; follow the linked Google pages if yours look different.</p>
+<footer><a href="./">Home</a> &middot; <a href="support.html">Support</a> &middot; <a href="pro.html">Pro</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a><br>
+Google Sheets, Google Docs, Google Drive and Google Workspace are trademarks of Google LLC. RowStamp is not affiliated with or endorsed by Google.</footer>
+</body></html>
