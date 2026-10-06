@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowStamp: certificates and invoices from Google Sheets rows</title>
+<meta name="description" content="Fill a certificate or invoice Google Doc for each row of your spreadsheet. Ready-made templates, column matching, and Doc and PDF links written back to your sheet. Free for 10 documents a day.">
+<link rel="canonical" href="https://nxrivard-sudo.github.io/rowstamp/">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<h1>RowStamp</h1>
+<p class="sub">Make a certificate or invoice for each row of a Google Sheets&trade; spreadsheet, as a Google Doc with a PDF download link.</p>
+<p>RowStamp is a spreadsheet add-on. Pick a template, choose the rows, and click <b>Fill documents</b>. Each row becomes its own Google Doc, and the links are added in new columns next to your data. Your existing cells are never changed.</p>
+<h2>How it works</h2>
+<table class="grid"><tr><th>Your sheet</th><th>Your template</th><th>Result</th></tr>
+<tr><td>Name: Avery Example<br>Course: Food Safety<br>Date: October 6, 2026</td><td>This certifies that <span class="tag">{{Name}}</span> has completed <span class="tag">{{Course}}</span> on <span class="tag">{{Date}}</span></td><td>This certifies that Avery Example has completed Food Safety on October 6, 2026</td></tr>
+<tr><td>Invoice Number: 1001<br>Client Name: Example Catering Co.<br>Amount: $500.00</td><td>Invoice <span class="tag">{{Invoice Number}}</span><br>Bill to <span class="tag">{{Client Name}}</span><br>Total due <span class="tag">{{Amount}}</span></td><td>Invoice 1001<br>Bill to Example Catering Co.<br>Total due $500.00</td></tr></table>
+<ol class="steps"><li><b>Template.</b> Start from the built-in certificate or invoice template (RowStamp creates it as a Google Doc you can edit and brand), or use one of your own Docs.</li>
+<li><b>Fields.</b> Placeholders like <span class="tag">{{Name}}</span> are matched to your column headers automatically. Change any match under <b>Check fields</b>.</li>
+<li><b>Rows.</b> Fill all rows, a range like 2-20, or the rows you selected.</li>
+<li><b>Links.</b> Each row gets a "RowStamp doc" link and, if you want, a "RowStamp PDF" download link. Rows that already have a document are skipped next time, so you can add rows and run it again.</li></ol>
+<h2>Good for</h2>
+<ul><li><b>Certificates:</b> course completion, training, attendance, awards.</li>
+<li><b>Invoices and receipts:</b> one invoice per order or client row.</li>
+<li><b>Letters:</b> offer letters, confirmations, any Doc with a few personalized fields.</li></ul>
+<h2>Private by design</h2>
+<p>RowStamp runs inside Google's Apps Script. It asks for only two permissions: the spreadsheet you open it in, and the Google Drive files it creates or that you choose. It can't see the rest of your Drive. It makes no requests to outside servers and sends no data to us or anyone else. See the <a href="privacy.html">privacy policy</a>.</p>
+<h2>Pricing</h2>
+<table><tr><th>Free</th><th>Pro</th></tr><tr><td>All features and templates, 10 documents per day</td><td>No daily limit. $12 per year or $29 one-time. <a href="pro.html">About Pro</a></td></tr></table>
+<h2>Availability</h2>
+<p>RowStamp will be available as a Google Sheets add-on after Google Workspace Marketplace review. Once installed, open it from the add-ons side panel in Google Sheets.</p>
+<p class="note">Also from us: <a href="https://nxrivard-sudo.github.io/contact-prep/">Contact Prep</a> (split names, format phone numbers) and <a href="https://nxrivard-sudo.github.io/dedupe-pilot/">Dedupe Pilot</a> (merge duplicate rows).</p>
+<footer><a href="support.html">Support</a> &middot; <a href="pro.html">Pro</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a><br>
+Google Sheets, Google Docs, Google Drive and Google Workspace are trademarks of Google LLC. RowStamp is not affiliated with or endorsed by Google.</footer>
+</body></html>
